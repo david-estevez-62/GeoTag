@@ -49,7 +49,7 @@ var status = "false";
 $("#scanBar").on("click", function(){
   if(status === "false"){
     status = "true";
-console.log(map);
+
     $.get("/scan", function(data){
 
 
@@ -154,6 +154,9 @@ function timeout(){
 
  
   google.maps.event.addListener(map, 'click', function(event) {
+  // No such thing as zoom level 0. A global variable or define within object.
+
+
     var img = icon[0].src;
     var str = img.length;
 
@@ -162,92 +165,19 @@ function timeout(){
     var imgpath = img.substring(i, str);
 
 
+    function formatIcon(){
+      var iconSize = map.getZoom();
+      console.log(iconSize);
 
-
-    var markerImage1 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(12, 12),
+      markerImage = new google.maps.MarkerImage(imgpath,
+                new google.maps.Size(iconSize, iconSize),
                 new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
+                new google.maps.Point(iconSize/2, iconSize/2));
 
-    var markerImage2 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(13, 13),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
+      return markerImage;
+    }
 
-    var markerImage3 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(14, 14),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage4 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(15, 15),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage5 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(16, 16),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage6 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(17, 17),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage7 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(18, 18),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage8 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(19, 19),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage9 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(20, 20),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage10 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(21, 21),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage11 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(22, 22),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage12 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(23, 23),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage13 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(25, 25),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage14 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(27, 27),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-    var markerImage15 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(29, 29),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(4, 4));
-
-
-    var markerImage16 = new google.maps.MarkerImage(imgpath,
-                new google.maps.Size(30, 30),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(15, 15));
-
-    zoomIcons = [null, markerImage1, markerImage2, markerImage3, markerImage4, markerImage5, markerImage6, markerImage7, markerImage8, markerImage9, markerImage10, markerImage11, markerImage12, markerImage13, markerImage14, markerImage15, markerImage16];  // No such thing as zoom level 0. A global variable or define within object.
-
-
+    
     
 
   // Create new marker at event click location and inject into map
@@ -256,7 +186,7 @@ function timeout(){
         map: map
       });
 
-      marker.setIcon(zoomIcons[map.getZoom()]);
+      marker.setIcon(formatIcon());
 
       placedWeaponIcons.push(marker);
 

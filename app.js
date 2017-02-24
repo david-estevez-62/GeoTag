@@ -98,6 +98,7 @@ app.post('/locate', userController.locate);
 
 
 
+
 app.get('/scan', userController.scan)
 app.get('/weapon', function(req, res){
   console.log(req.query.weapon)
