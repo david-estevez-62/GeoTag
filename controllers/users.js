@@ -40,7 +40,8 @@ var userController = {
        ]
     }
 
-
+    // Lookup documents based on time first because geolocation query is a longer operation and we don't care about doing
+    // additional operation (db lookup) if no documents come back from the (specified) time query
     User.find({ "location.datetime": {"$gte": minusmin}}, function (err, user) {
 
       if (err) return handleErr(err);
